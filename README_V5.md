@@ -11,7 +11,7 @@
 1. Install Arduino IDE and the ESP32 board package.
 2. Install a compatible `LiquidCrystal_I2C` library.
 3. Open `Smart_IoT_Fault_System_V5.ino`, select your ESP32 board and COM port, then compile before connecting the sensors.
-4. Join Wi-Fi `SmartFault-Setup` using `DCmonitor123`.
+4. Join Wi-Fi `SmartFault-Setup` using `************`.
 5. Open `http://192.168.4.1` on the connected phone/computer.
 6. Admin user: `admin`; password: `*****.**.***`.
 
