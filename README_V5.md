@@ -13,7 +13,7 @@
 3. Open `Smart_IoT_Fault_System_V5.ino`, select your ESP32 board and COM port, then compile before connecting the sensors.
 4. Join Wi-Fi `SmartFault-Setup` using `DCmonitor123`.
 5. Open `http://192.168.4.1` on the connected phone/computer.
-6. Admin user: `admin`; password: `Suraj.bh.com`.
+6. Admin user: `admin`; password: `*****.**.***`.
 
 ## Validation status
 The archive and embedded JavaScript syntax are checked. This environment does not have the ESP32 Arduino toolchain, so the firmware has not been compiled against your exact board package/libraries and has not been tested on physical hardware. Do not treat this as a guarantee of zero bugs. Compile first and resolve any board/library-specific messages before wiring sensors.
