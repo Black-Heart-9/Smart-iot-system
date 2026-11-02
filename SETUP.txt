@@ -1,0 +1,633 @@
+SMART IoT ELECTRICAL FAULT DETECTION SYSTEM
+
+Complete Beginner's Guide: Arduino IDE to ESP32 Dashboard (V6.0)
+
+Project: Smart IoT Electrical Fault Detection System
+Board: ESP32 DevKit V1 (30-pin)
+Firmware: V6.0 Reliability Edition
+Power system: Isolated 12V DC demonstration
+Programming software: Arduino IDE
+Dashboard: Web browser on a phone or laptop
+
+---
+
+PART 1 — WHAT YOU WILL DO
+
+Follow this guide in order. You do not need previous programming experience.
+
+By the end, you should know how to:
+
+1. Install Arduino IDE on your laptop.
+2. Configure Arduino IDE for ESP32.
+3. Install the required library.
+4. Extract and open the V6.0 project.
+5. Connect your ESP32 to the laptop.
+6. Select the correct board and USB port.
+7. Compile and upload the firmware.
+8. Open the ESP32's Wi-Fi setup page.
+9. Connect the ESP32 to your router, if you choose.
+10. Open the dashboard and check the readings.
+11. Troubleshoot common errors.
+
+Important: The V6.0 firmware is a development build. It has not yet been confirmed to compile with your exact board package and libraries or tested on your physical hardware. If an error occurs, follow the troubleshooting section and keep the complete error message.
+
+PART 2 — ITEMS YOU NEED
+
+Prepare these items before starting.
+
+- A Windows laptop or computer.
+- An ESP32 DevKit V1 development board with a USB port.
+- A USB data cable compatible with your ESP32.
+- Internet access on the laptop for software downloads.
+- The project ZIP file: "Smart_IoT_Fault_System_V6_0_Reliability_Edition.zip".
+- Your project hardware and multimeter for later testing.
+
+You do not need to connect the sensors, relay, or other hardware during the initial programming stage.
+
+Safety rules
+
+1. Never connect this student project directly to household 230V AC mains.
+2. Never deliberately create a real short circuit.
+3. ESP32 GPIO pins are not 5V tolerant.
+4. Do not connect sensor outputs until their voltages have been checked with a multimeter.
+5. Do not connect or disconnect hardware wiring while the circuit is powered.
+6. Keep the relay OFF unless its wiring and behavior have been safely verified.
+
+PART 3 — DOWNLOAD AND INSTALL ARDUINO IDE
+
+Step 1: Open the official website
+
+1. Turn on your laptop.
+
+2. Open a web browser.
+
+3. Visit:
+   
+   https://www.arduino.cc/en/software
+
+4. Find the Arduino IDE download section.
+
+5. Select the Windows version that matches your laptop.
+
+6. Download the installer or ZIP package offered by the official website.
+
+For a beginner, the Windows installer is usually the easiest choice.
+
+Step 2: Install Arduino IDE
+
+If you downloaded an installer:
+
+1. Open your Downloads folder.
+2. Double-click the Arduino IDE installer.
+3. Accept the license if prompted.
+4. Follow the installation instructions.
+5. Allow required driver installation prompts if they appear.
+6. Finish the installation.
+7. Open Arduino IDE from the Start menu.
+
+If Windows asks for permission to install software, verify that the installer came from the official Arduino website before accepting.
+
+Step 3: Confirm that Arduino IDE opens
+
+When Arduino IDE opens, you should see an editor where code can be displayed, along with menus such as File, Edit, Sketch, Tools, and Help.
+
+Do not start writing your own code. We will use the supplied project firmware.
+
+PART 4 — CONFIGURE ARDUINO IDE FOR ESP32
+
+Arduino IDE does not necessarily include ESP32 board support by default. Install it before uploading the firmware.
+
+Step 4: Open Preferences
+
+1. Open Arduino IDE.
+2. Click File.
+3. Select Preferences. On some versions, this may appear under Settings.
+
+Look for the field named Additional Boards Manager URLs.
+
+Step 5: Add the official ESP32 board package URL
+
+Enter this URL:
+
+https://espressif.github.io/arduino-esp32/package_esp32_index.json
+
+If the field already contains another URL, preserve the existing entry and add this URL separated by a comma if your version uses a single-line field.
+
+Click OK or Save.
+
+Step 6: Install the ESP32 board package
+
+1. Open Tools → Board → Boards Manager. In some versions, use the Boards Manager icon in the sidebar.
+2. Search for "esp32".
+3. Find the package named esp32 by Espressif Systems.
+4. Click Install.
+5. Wait for the download and installation to finish.
+
+The process may take several minutes depending on your internet speed.
+
+If installation fails, check your internet connection and try again. Do not install random board packages from unknown websites.
+
+Step 7: Select the ESP32 board
+
+After installation:
+
+1. Open Tools → Board.
+2. Find the ESP32 board list.
+3. Select ESP32 Dev Module if available for your ESP32 DevKit V1.
+
+Some board menus show a similar ESP32 development-board option. If your exact board is marked differently, check its label or documentation before selecting a different model.
+
+PART 5 — DOWNLOAD AND EXTRACT THE PROJECT
+
+Step 8: Download the V6.0 ZIP
+
+Download the project archive supplied for this project:
+
+"Smart_IoT_Fault_System_V6_0_Reliability_Edition.zip"
+
+Save it somewhere easy to find, such as your Downloads folder.
+
+Step 9: Extract the ZIP
+
+Do not try to edit the code while it is still inside the compressed ZIP.
+
+1. Open File Explorer.
+2. Go to Downloads.
+3. Right-click the ZIP file.
+4. Choose Extract All.
+5. Choose a convenient location, such as your Desktop.
+6. Click Extract.
+
+Open the extracted folder. You should find a folder named:
+
+"Smart_IoT_Fault_System_V6_0"
+
+Inside it, look for these files:
+
+- "Smart_IoT_Fault_System_V6_0.ino"
+- "README_V6_0.md"
+- "PIN_CONNECTIONS_V6_0.txt"
+- "RELEASE_NOTES_V6_0.md"
+
+The ".ino" file is the main Arduino firmware. The other files provide setup, wiring, and release information.
+
+PART 6 — OPEN THE PROJECT CODE
+
+Step 10: Open the INO file
+
+1. Open Arduino IDE.
+2. Click File → Open.
+3. Navigate to the extracted project folder.
+4. Select "Smart_IoT_Fault_System_V6_0.ino".
+5. Click Open.
+
+Wait for the code to load.
+
+You should see C++ code containing instructions for the ESP32, Wi-Fi manager, web server, LCD, sensors, and dashboard.
+
+Do not rename the file or randomly change code values. First, try to compile the supplied firmware as it is.
+
+PART 7 — INSTALL THE REQUIRED LIBRARY
+
+The V6.0 firmware includes these headers:
+
+- "WiFi.h"
+- "WebServer.h"
+- "Wire.h"
+- "LiquidCrystal_I2C.h"
+- "Preferences.h"
+- "ESPmDNS.h"
+
+Most of these are provided by the ESP32 board package or Arduino framework. The additional library required by the sketch is the I2C LCD library.
+
+Step 11: Install LiquidCrystal_I2C
+
+1. In Arduino IDE, open Sketch → Include Library → Manage Libraries.
+2. Search for "LiquidCrystal I2C".
+3. Find a compatible "LiquidCrystal_I2C" library.
+4. Install it.
+
+The sketch uses the common "lcd.init()" and "lcd.backlight()" methods. A library with the same name may have a different API, so if you see errors mentioning "LiquidCrystal_I2C", "lcd.init()", or "lcd.begin()", check the library compatibility before changing the code.
+
+Do not install another library for "WiFi.h", "WebServer.h", "Preferences.h", or "ESPmDNS.h" separately unless a specific error and its documentation show that something is missing. These are normally provided by the ESP32 board package.
+
+PART 8 — CONNECT THE ESP32 TO YOUR LAPTOP
+
+Step 12: Connect the USB cable
+
+For the first upload, connect only the ESP32 board and the USB cable.
+
+1. Keep the ESP32 disconnected from the external 12V project supply.
+2. Connect the USB cable to the ESP32.
+3. Connect the other end to a USB port on the laptop.
+4. Wait a few seconds for Windows to detect the board.
+
+Some ESP32 boards use a USB-to-serial chip that needs a driver. Others have native USB support. If Windows does not detect the board, identify the chip or board model before installing a driver from its official manufacturer.
+
+Step 13: Select the COM port
+
+1. In Arduino IDE, open Tools → Port.
+2. Look for a port such as "COM3", "COM4", or another COM number.
+3. Select the port that appeared when you connected the ESP32.
+
+If you are unsure which port belongs to the ESP32:
+
+1. Disconnect the USB cable.
+2. Check the available ports.
+3. Connect the ESP32 again.
+4. Check which new port appears.
+5. Select that port.
+
+If no port appears, try a known USB data cable, another USB port, or the correct USB-to-serial driver.
+
+PART 9 — COMPILE THE FIRMWARE
+
+Compilation checks whether the code can be built for your selected board. It does not upload the code yet.
+
+Step 14: Click Verify
+
+In Arduino IDE, click the Verify button, usually represented by a checkmark.
+
+Wait while Arduino IDE compiles the project.
+
+If compilation succeeds
+
+You should see a success message similar to:
+
+"Done compiling"
+
+The exact wording can vary by IDE version.
+
+Continue to the next part.
+
+If compilation fails
+
+Look at the bottom of Arduino IDE and find the first actual error message. Common examples include:
+
+- "LiquidCrystal_I2C.h: No such file or directory"
+- "WiFi.h: No such file or directory"
+- "Compilation error"
+- A missing function or method
+- A board package or toolchain error
+
+Do not immediately delete code or change multiple libraries. Copy the complete error message, including the first error, and use it to identify the problem.
+
+PART 10 — UPLOAD THE CODE TO ESP32
+
+Only continue after compilation succeeds.
+
+Step 15: Confirm board and port
+
+Before uploading, check:
+
+- Board: ESP32 Dev Module, if appropriate for your board.
+- Port: The COM port assigned to your ESP32.
+- USB cable: Connected firmly.
+- External circuit: Disconnected for the initial upload.
+
+Step 16: Click Upload
+
+1. Click the Upload button, usually represented by a right arrow.
+2. Wait for compilation and upload to begin.
+3. Watch the messages at the bottom of Arduino IDE.
+
+Some ESP32 boards automatically enter upload mode. Others may require you to hold the BOOT button when the IDE displays "Connecting...", then release it once the upload begins. The exact procedure depends on the board.
+
+If the upload finishes successfully, you should see a message similar to:
+
+"Hard resetting via RTS pin..."
+
+or another success message, depending on the board and IDE version.
+
+If the upload fails, read the error before repeating the process.
+
+PART 11 — CHECK THE ESP32 SERIAL MONITOR
+
+The Serial Monitor can display the ESP32's startup messages, Wi-Fi setup name, and assigned dashboard IP address.
+
+Step 17: Open Serial Monitor
+
+1. In Arduino IDE, open Tools → Serial Monitor.
+2. Set the baud rate to 115200.
+3. If the display is blank, press the ESP32's EN or RESET button once.
+4. Wait for the startup messages.
+
+The V6.0 firmware prints information similar to:
+
+- "SmartFault Wi-Fi manager"
+- "Setup Wi-Fi: SmartFault-XXXX"
+- "Password: DCmonitor123"
+- "IP: 192.168.4.1"
+
+The actual Wi-Fi name contains a device-specific suffix. For example, it might resemble "SmartFault-ABCD", but the suffix will depend on your board.
+
+Use the actual SSID shown by your ESP32. Do not assume every board has the same Wi-Fi name.
+
+The setup password in the supplied firmware is currently "DCmonitor123". Change it before a public demonstration.
+
+PART 12 — CONNECT YOUR PHONE OR LAPTOP TO ESP32 WI-FI
+
+At first boot, if no saved router credentials successfully connect, the ESP32 starts its own setup Wi-Fi.
+
+Step 18: Open Wi-Fi settings
+
+On your laptop:
+
+1. Click the Wi-Fi icon in the Windows taskbar.
+2. Open the available networks list.
+3. Find the "SmartFault-XXXX" network shown in the Serial Monitor.
+4. Click Connect.
+5. Enter the setup password:
+
+"DCmonitor123"
+
+6. Wait for the connection.
+
+Your laptop may say No Internet or No Internet access. That is normal because this setup Wi-Fi is intended to connect locally to the ESP32, not to provide internet access.
+
+If Windows asks whether to remain connected, choose the option that keeps you connected to this network.
+
+Step 19: Open the setup webpage
+
+1. Open your browser.
+2. Enter this address in the address bar:
+
+"http://192.168.4.1"
+
+3. Press Enter.
+
+If the setup portal is running, the Wi-Fi management page should appear.
+
+If a captive-portal popup does not appear automatically, opening the address manually is expected.
+
+If the page does not load, verify that you are connected to the correct ESP32 Wi-Fi and check the Serial Monitor for its setup IP.
+
+PART 13 — CONNECT ESP32 TO YOUR ROUTER WI-FI
+
+This step is optional. You can use the setup network for configuration, but connecting the ESP32 and your laptop to the same router makes accessing the dashboard more convenient.
+
+Step 20: Scan for networks
+
+On the Wi-Fi manager page:
+
+1. Find the network scan option.
+2. Start a scan.
+3. Wait for nearby networks to appear.
+4. Select your intended router network.
+
+The ESP32 supports 2.4 GHz Wi-Fi. A router broadcasting only 5 GHz will not work with this board.
+
+If your network is hidden or does not appear, use the manual SSID entry option if available.
+
+Step 21: Enter the router password
+
+1. Confirm the correct network name.
+2. Enter that network's Wi-Fi password.
+3. Select Save and connect.
+4. Wait while the ESP32 attempts to connect.
+
+The ESP32 stores the saved credentials in its non-volatile storage so that it can try to reconnect after restarting.
+
+Do not confuse the router's password with the ESP32 setup password. They are different credentials.
+
+Step 22: Wait for connection
+
+If the connection succeeds:
+
+1. The ESP32 should connect to the router.
+2. Its temporary setup Wi-Fi should turn off.
+3. Your laptop or phone should reconnect to the same router.
+4. Check the Serial Monitor or LCD for the ESP32's router-assigned IP address.
+
+If the connection fails, the setup network should remain available or be restored by the firmware, allowing you to try again.
+
+PART 14 — OPEN THE DASHBOARD THROUGH THE ROUTER
+
+Step 23: Connect your laptop to the same router
+
+If the ESP32 has connected to your home router:
+
+1. Open your laptop's Wi-Fi settings.
+2. Connect to the same router network.
+3. Keep the ESP32 powered.
+4. Find the IP address printed by the ESP32 in the Serial Monitor or shown on the LCD.
+
+The IP address may look like:
+
+"192.168.1.105"
+
+This is only an example. Your actual address will depend on your router.
+
+Step 24: Open the dashboard
+
+Enter the actual address in your browser, including "http://".
+
+For example:
+
+"http://192.168.1.105"
+
+Replace the example IP with the one assigned to your ESP32.
+
+If your network supports mDNS, you may also be able to use the device hostname printed or documented by the firmware, such as "http://smartfault-XXXX.local".
+
+If the hostname does not work, use the numeric IP address.
+
+PART 15 — TEST THE DASHBOARD
+
+Once the dashboard opens, check the following.
+
+Step 25: Check the main readings
+
+Look for:
+
+- Input voltage.
+- Output voltage.
+- Current.
+- Estimated power.
+- Energy.
+- Current fault status.
+- Wi-Fi connection information.
+- Sensor status and data freshness.
+
+When the sensors are not connected, readings may be zero, invalid, or misleading. Do not assume that a displayed zero means the hardware is safe or that a sensor is working correctly.
+
+Step 26: Check the other dashboard features
+
+If available in your loaded firmware, check:
+
+- Live graphs.
+- Fault event history.
+- CSV export.
+- Sensor-health or stale-data warnings.
+- Admin settings.
+- Software fault simulation.
+- Wi-Fi status and device information.
+
+Use software simulation for demonstrations. Do not create physical short circuits to test the system.
+
+Some administrative actions may require HTTP authentication. The firmware currently contains these default credentials:
+
+Username: "admin"
+
+Password: "Suraj.bh.com"
+
+Change the default password before public use. The local HTTP interface is not encrypted, so do not expose it to the public internet.
+
+PART 16 — CONNECT THE LCD AND SENSORS
+
+Do not connect all hardware until the firmware has compiled and uploaded successfully.
+
+Step 27: Switch off power before wiring
+
+1. Disconnect the USB cable.
+2. Disconnect the external 12V DC supply.
+3. Check the wiring diagram and the labels on every module.
+4. Verify power-supply output and sensor output voltages with a multimeter before connecting them to the ESP32.
+5. Connect only one section at a time.
+6. Recheck polarity and common-ground requirements before powering the circuit.
+
+Step 28: Use the supplied pin map
+
+The supplied V6.0 pin map identifies these connections:
+
+- GPIO32: ACS712 current-sensor output through a verified voltage divider.
+- GPIO34: Input-voltage sensor output through a verified voltage divider.
+- GPIO35: Output-voltage sensor output through a verified voltage divider.
+- GPIO21: I2C SDA for the LCD.
+- GPIO22: I2C SCL for the LCD.
+- GPIO16: Green LED.
+- GPIO17: Yellow LED.
+- GPIO23: Red LED.
+- GPIO27: Blue LED.
+- GPIO14: White LED.
+- GPIO25: Buzzer driver transistor input.
+- GPIO26: Relay module input.
+
+Use the exact "PIN_CONNECTIONS_V6_0.txt" file from your ZIP as the reference.
+
+Critical: Never feed 5V directly into an ESP32 GPIO or ADC pin. Verify the voltage-divider ratios and sensor module outputs. Some LCD I2C backpacks pull SDA and SCL up to 5V, so a suitable level shifter may be necessary.
+
+The LM2596 buck converter must be adjusted and measured at the required 5V output before connecting compatible 5V modules or the ESP32 VIN pin. Do not assume its output is correct just because the module is connected.
+
+The relay must remain OFF by default. It is not certified automatic electrical protection.
+
+PART 17 — COMMON PROBLEMS AND SOLUTIONS
+
+Problem 1: ESP32 does not appear in the Port menu
+
+Try:
+
+1. Disconnect and reconnect the USB cable.
+2. Try another USB port.
+3. Try a known USB data cable.
+4. Check Windows Device Manager for a new serial device.
+5. Identify the USB-to-serial chip on your board and install its official driver if required.
+
+Problem 2: "WiFi.h" cannot be found
+
+Check that the ESP32 board package is installed and an ESP32 board is selected.
+
+Do not try to solve this by installing unrelated libraries.
+
+Problem 3: "LiquidCrystal_I2C.h" cannot be found
+
+Open Library Manager and install a compatible LiquidCrystal_I2C library.
+
+If the header is found but a method is missing, check library compatibility.
+
+Problem 4: Upload gets stuck at "Connecting..."
+
+Try:
+
+1. Check the selected COM port.
+2. Use a reliable USB data cable.
+3. Press and hold the ESP32 BOOT button when "Connecting..." appears.
+4. Release it once upload begins.
+5. If the problem continues, identify the exact board model and upload error.
+
+Problem 5: Wi-Fi setup network is not visible
+
+Try:
+
+1. Check the Serial Monitor at 115200 baud.
+2. Reset the ESP32.
+3. Look for the exact "SmartFault-XXXX" name printed at startup.
+4. Move your laptop or phone closer to the ESP32.
+5. Check whether the firmware reports that the access point started successfully.
+
+Problem 6: "192.168.4.1" does not open
+
+Make sure your laptop is connected to the ESP32 setup network, not your home router or another network.
+
+Then enter:
+
+"http://192.168.4.1"
+
+Use HTTP, not HTTPS.
+
+Problem 7: Router connection fails
+
+Check:
+
+- The router supports 2.4 GHz Wi-Fi.
+- The network name and password are correct.
+- The router is within range.
+- The router is not blocking local devices through client isolation.
+- The ESP32 setup network has returned so you can reconfigure the connection.
+
+Problem 8: Dashboard opens but sensor readings are wrong
+
+Possible causes include:
+
+- Incorrect wiring.
+- Incorrect voltage-divider ratio.
+- Incorrect calibration values.
+- Wrong sensor module variant.
+- Poor common-ground connection.
+- ADC measurement limitations.
+- Sensor outputs exceeding the ESP32's safe input range.
+
+Do not change calibration values randomly. Compare the readings against a multimeter under safe, isolated 12V DC test conditions.
+
+Problem 9: LCD remains blank
+
+Check:
+
+- LCD power and ground.
+- I2C SDA and SCL wiring.
+- Whether the LCD backpack uses address "0x27" or another address such as "0x3F".
+- Whether the backpack's I2C pull-ups are compatible with the ESP32's 3.3V logic.
+
+Disconnect power before changing wiring.
+
+PART 18 — FINAL CHECKLIST
+
+Before calling the project ready for demonstration, confirm each item.
+[ ] Arduino IDE is installed.
+[ ] ESP32 board support is installed.
+[ ] Correct board is selected.
+[ ] Correct USB port is selected.
+[ ] Required LCD library is installed.
+[ ] Firmware compiles successfully.
+[ ] Firmware uploads successfully.
+[ ] Serial Monitor shows startup messages.
+[ ] ESP32 setup Wi-Fi appears.
+[ ] Setup webpage opens at http://192.168.4.1.
+[ ] Router connection works, if configured.
+[ ] Dashboard opens using the actual assigned IP.
+[ ] LCD and sensors are connected and checked safely.
+[ ] Readings are compared against a multimeter.
+[ ] Software fault simulation works as intended.
+[ ] Default passwords are changed before public demonstration.
+[ ] The complete project is tested on isolated 12V DC only.
+IMPORTANT FINAL NOTES
+The ESP32 does not need internet access to host its local dashboard.
+The setup Wi-Fi password and router Wi-Fi password are different.
+The router-assigned IP may change after restarting the router or ESP32.
+The browser may warn that the setup Wi-Fi has no internet. That is normal.
+The current firmware is a development build until it compiles successfully and is tested on actual hardware.
+The fault indicators are for educational monitoring and are not a replacement for certified electrical protection.
+Never connect this project to household 230V AC mains.
+
+Recommended first session: Install Arduino IDE, install ESP32 board support, install the LCD library, open the V6.0 INO file, and click Verify. Do not connect the full circuit until the code compiles and the initial upload succeeds.
+If you encounter an error, save the complete error message and resolve it before continuing to the next step.
