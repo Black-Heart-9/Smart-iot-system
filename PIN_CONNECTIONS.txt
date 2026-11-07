@@ -1,0 +1,21 @@
+SMART IoT FAULT SYSTEM V5.2 — PIN MAP (unchanged from V5.1)
+
+ESP32 DevKit V1
+GPIO32  <- ACS712 OUT through a verified divider (never exceed 3.3 V at ESP32 pin)
+GPIO34  <- Input voltage sensor output through verified divider
+GPIO35  <- Output voltage sensor output through verified divider
+GPIO21  -> I2C SDA (use a suitable level shifter if LCD backpack pulls SDA to 5 V)
+GPIO22  -> I2C SCL (use a suitable level shifter if LCD backpack pulls SCL to 5 V)
+GPIO16  -> Green LED through current-limiting resistor
+GPIO17  -> Yellow LED through current-limiting resistor
+GPIO23  -> Red LED through current-limiting resistor
+GPIO27  -> Blue LED through current-limiting resistor
+GPIO14  -> White LED through current-limiting resistor
+GPIO25  -> Buzzer driver transistor input through base resistor
+GPIO26  -> Relay module IN (held OFF by firmware; verify module active level)
+
+Power: 12 V adapter powers the isolated demonstration circuit. Set LM2596 output to the required 5 V and measure it before connecting compatible 5 V modules/ESP32 VIN. Use common ground only where required by the circuit design.
+
+Physical rocker switches are in the DC power path and are not GPIO inputs. Fuse value must be selected for the adapter, wire gauge and intended load; do not assume the holder's 32 A marking is a suitable fuse rating.
+
+Safety: never connect this student build to 230 V AC mains. Never create a physical short circuit. Verify sensor module outputs and all ESP32 ADC pin voltages with a multimeter before connecting.
